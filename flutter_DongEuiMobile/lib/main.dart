@@ -1,13 +1,18 @@
+import 'dart:js';
 
+import 'UniInfo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dongeuimobile/UniInfo.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-void main(){
+void main() {
   runApp(const MoonApp());
 }
 
 class MoonApp extends StatelessWidget {
   const MoonApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,45 +23,57 @@ class MoonApp extends StatelessWidget {
   }
 }
 
-AppBar _buildDoneEuiAppBar(){
+AppBar _buildDoneEuiAppBar() {
   return AppBar(
     backgroundColor: Colors.blueAccent,
     leading: Image.asset("assets/images/dongeui_logo.png"),
-    title: const Text("모바일ID", style: TextStyle(fontSize: 40)),
+    title: const Text("모바일ID", style: TextStyle(fontSize: 35)),
     centerTitle: true,
     actions: [
-      IconButton(
-          onPressed: (){
-          },
-          icon: Icon(Icons.menu)) ,
+      IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
     ],
   );
 }
 
-BottomNavigationBar _buildBottom(){
+BottomNavigationBar _buildBottom() {
   return BottomNavigationBar(
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Image.asset("assets/images/bottom1.jpg"),
-          label: ""
+    items: <BottomNavigationBarItem>[
+      BottomNavigationBarItem(
+          icon: InkWell(
+            child: Image.asset("assets/images/bottom1.jpg"),
+            onTap: () {
+              
+            },
+          ),
+          label: ""),
+      BottomNavigationBarItem(
+        icon: InkWell(
+          child: Image.asset("assets/images/bottom2.jpg"),
+          onTap: () {},
         ),
-        BottomNavigationBarItem(
-          icon: Image.asset("assets/images/bottom2.jpg"),
-            label: ""
-        ),
-        BottomNavigationBarItem(
-            icon: Image.asset("assets/images/bottom3.jpg"),
-            label: ""
-        ),
-        BottomNavigationBarItem(
-            icon: Image.asset("assets/images/bottom4.jpg"),
-            label: ""
-        ),
-        BottomNavigationBarItem(
-            icon: Image.asset("assets/images/bottom5.jpg"),
-            label: ""
-        ),
-      ],
+        label: "",
+      ),
+      BottomNavigationBarItem(
+          icon: InkWell(
+            child: Image.asset("assets/images/bottom3.jpg"),
+            onTap: () {},
+          ),
+          label: ""),
+      BottomNavigationBarItem(
+          icon: InkWell(
+            child: Image.asset("assets/images/bottom4.jpg"),
+            onTap: () {},
+          ),
+          label: ""),
+      BottomNavigationBarItem(
+          icon: InkWell(
+            child: Image.asset("assets/images/bottom5.jpg"),
+            onTap: (){
+
+            },
+          ),
+          label: ""),
+    ],
   );
 }
 
@@ -65,61 +82,191 @@ class DongEuiPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.black12,
       appBar: _buildDoneEuiAppBar(),
       bottomNavigationBar: _buildBottom(),
-      body: Column(
+      body: ListView(
         children: [
-          _buildInfo(),
-          _buildMenu()
+          _buildInfo(screenWidth: screenWidth),
+          _buildMenu(),
         ],
       ),
     );
   }
 }
 
-Widget _buildInfo(){
-  return Column(
-    children: [
-      Row(
-        children: [
-          Image.asset("assets/images/profile.jpg", width: 50,height: 50,),
-          Column(
-            children: [
-              Image.asset("assets/images/qr.png", width: 50,height: 50,),
-              Text("시간")
-            ],
-          )
-        ],
-      ),
-      Divider(thickness: 1, height: 1, color: Colors.black87),
-      Row(
-        children: [
-          Text("문땅훈><"),
-          Text("ZL 특별열람중"),
-        ],
-      ),
-    ],
-  );
-
+launchMyURL() async {
+  var uri = Uri.parse("https://www.youtube.com");
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri);
+  }
 }
 
-Widget _buildMenu(){
-  return Column(
-    children: [
-      Row(
-        children: [
-          Image.asset("assets/images/menu1.jpg"),
-          Image.asset("assets/images/menu2.jpg"),
-          Image.asset("assets/images/menu3.jpg"),
-        ],
-      ),
-      Row(
-        children: [
-          Image.asset("assets/images/menu4.jpg"),
-          Image.asset("assets/images/menu5.jpg"),
-        ],
-      )
-    ],
+Widget _buildInfo({required double screenWidth}) {
+  return Container(
+    margin: const EdgeInsets.all(30.0),
+    padding: const EdgeInsets.all(10.0),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(8.0),
+    ),
+    child: Column(
+      children: [
+        Row(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: InkWell(
+                onTap: (){
+                  launchMyURL();
+                  print("ontap");
+                },
+                child: Container(
+                  height: 180,
+                  child: Image.asset(
+                    "assets/images/profile.jpg",
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                child: Column(
+                  children: [
+                    Image.asset(
+                      "assets/images/qr.png",
+                      width: screenWidth * 0.2,
+                    ),
+                    Text(
+                      "시간",
+                      style:
+                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Divider(thickness: 1.5, height: 1, color: Colors.grey),
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(
+                  "문땅훈><",
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    Text(
+                      "ZL",
+                      style:
+                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "특별열람중",
+                      style:
+                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
+
+Widget _buildMenu() {
+  return Container(
+    margin: const EdgeInsets.all(30.0),
+    padding: const EdgeInsets.all(10.0),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(8.0),
+    ),
+    child: Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  //Navigator.push(context, MaterialPageRoute(builder: UniInfo()))
+                },
+                child: Container(
+                  height: 180,
+                  child: Image.asset("assets/images/menu1.jpg"),
+                ),
+              ),
+            ),
+            VerticalDivider(thickness: 1.5, color: Colors.grey),
+            Expanded(
+              child: InkWell(
+                onTap: () {},
+                child: Container(
+                  height: 180,
+                  child: Image.asset("assets/images/menu2.jpg"),
+                ),
+              ),
+            ),
+            Expanded(
+              child: InkWell(
+                onTap: () {},
+                child: Container(
+                  height: 180,
+                  child: Image.asset("assets/images/menu3.jpg"),
+                ),
+              ),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Divider(thickness: 1.5, height: 1, color: Colors.grey),
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: InkWell(
+                onTap: () {},
+                child: Container(
+                  height: 180,
+                  child: Image.asset("assets/images/menu4.jpg"),
+                ),
+              ),
+            ),
+            Expanded(
+              child: InkWell(
+                onTap: () {},
+                child: Container(
+                  height: 180,
+                  child: Image.asset("assets/images/menu5.jpg"),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                color: Colors.white,
+              ),
+            ),
+          ],
+        )
+      ],
+    ),
   );
 }
