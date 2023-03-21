@@ -7,7 +7,8 @@ class CheckPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final checkController = context.watch<CheckController>();
+    final checkController = context.read<CheckController>();
+    print("CheckPage빌드댐");
 
     return Scaffold(
       appBar: AppBar(),
@@ -18,10 +19,17 @@ class CheckPage extends StatelessWidget {
               children: [
                 Text("체크페이지"),
                 ElevatedButton(
-                    onPressed: (){
-                      checkController.change();
-                    },
-                    child: Text("값변경"),
+                  onPressed: () {
+                    checkController.change();
+                  },
+                  child: Text("값변경"),
+                ),
+                Text("한줄더"),
+                ElevatedButton(
+                  onPressed: (){
+
+                  },
+                  child: Text("한줄더 버튼"),
                 )
               ],
             ),

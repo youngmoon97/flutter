@@ -1,5 +1,7 @@
 import 'dart:js';
 
+import 'package:flutter_hooks/flutter_hooks.dart';
+
 import 'UniInfo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +25,46 @@ class MoonApp extends StatelessWidget {
   }
 }
 
+class DongEuiPage extends HookWidget {
+  const DongEuiPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    final navIndex = useState(0);
+
+    double screenWidth = MediaQuery.of(context).size.width;
+    List widgetItems = [
+      ListView(
+        children: [
+          _buildInfo(screenWidth: screenWidth),
+          _buildMenu(context),
+        ],
+      ),
+      Container(
+        color: Colors.blue,
+      ),
+      Container(
+        color: Colors.yellow,
+      ),
+      Container(
+        color: Colors.green,
+      ),
+      Container(
+        color: Colors.purple,
+      ),
+
+    ];
+
+    return Scaffold(
+      backgroundColor: Colors.black12,
+      appBar: _buildDoneEuiAppBar(),
+      bottomNavigationBar: _buildBottom(navIndex),
+      body: widgetItems[navIndex.value],
+    );
+  }
+}
+
 AppBar _buildDoneEuiAppBar() {
   return AppBar(
     backgroundColor: Colors.blueAccent,
@@ -35,67 +77,35 @@ AppBar _buildDoneEuiAppBar() {
   );
 }
 
-BottomNavigationBar _buildBottom() {
+BottomNavigationBar _buildBottom(ValueNotifier<int> navIndex) {
   return BottomNavigationBar(
+    onTap: (int idx){
+      navIndex.value = idx;
+    },
+    currentIndex: navIndex.value,
     items: <BottomNavigationBarItem>[
       BottomNavigationBarItem(
-          icon: InkWell(
-            child: Image.asset("assets/images/bottom1.jpg"),
-            onTap: () {
-              
-            },
-          ),
+          icon: Image.asset("assets/images/bottom1.jpg"),
           label: ""),
       BottomNavigationBarItem(
-        icon: InkWell(
-          child: Image.asset("assets/images/bottom2.jpg"),
-          onTap: () {},
-        ),
+        icon: Image.asset("assets/images/bottom2.jpg"),
         label: "",
       ),
       BottomNavigationBarItem(
-          icon: InkWell(
-            child: Image.asset("assets/images/bottom3.jpg"),
-            onTap: () {},
-          ),
+          icon: Image.asset("assets/images/bottom3.jpg"),
+          label: "",
+      ),
+      BottomNavigationBarItem(
+          icon: Image.asset("assets/images/bottom4.jpg"),
           label: ""),
       BottomNavigationBarItem(
-          icon: InkWell(
-            child: Image.asset("assets/images/bottom4.jpg"),
-            onTap: () {},
-          ),
-          label: ""),
-      BottomNavigationBarItem(
-          icon: InkWell(
-            child: Image.asset("assets/images/bottom5.jpg"),
-            onTap: (){
-
-            },
-          ),
+          icon: Image.asset("assets/images/bottom5.jpg"),
           label: ""),
     ],
   );
 }
 
-class DongEuiPage extends StatelessWidget {
-  const DongEuiPage({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      backgroundColor: Colors.black12,
-      appBar: _buildDoneEuiAppBar(),
-      bottomNavigationBar: _buildBottom(),
-      body: ListView(
-        children: [
-          _buildInfo(screenWidth: screenWidth),
-          _buildMenu(),
-        ],
-      ),
-    );
-  }
-}
 
 launchMyURL() async {
   var uri = Uri.parse("https://www.youtube.com");
@@ -191,7 +201,7 @@ Widget _buildInfo({required double screenWidth}) {
   );
 }
 
-Widget _buildMenu() {
+Widget _buildMenu(context) {
   return Container(
     margin: const EdgeInsets.all(30.0),
     padding: const EdgeInsets.all(10.0),
@@ -206,7 +216,8 @@ Widget _buildMenu() {
             Expanded(
               child: InkWell(
                 onTap: () {
-                  //Navigator.push(context, MaterialPageRoute(builder: UniInfo()))
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => UniInfo())
+                  );
                 },
                 child: Container(
                   height: 180,

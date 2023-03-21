@@ -13,7 +13,6 @@ import 'package:provider/provider.dart';
 class DefaultPage extends HookWidget {
   DefaultPage({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     final checkController = context.watch<CheckController>();
@@ -22,7 +21,7 @@ class DefaultPage extends HookWidget {
           () => DefaultSecondItem(),
     ];
 
-    final navIndex = useState(0);
+    final  navIndex = useState(0);
     print("DefalutPage 빌드됨" + navIndex.value.toString());
 
     return Scaffold(

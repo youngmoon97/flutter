@@ -6,8 +6,15 @@ class UniInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("UniInfo"),
+      appBar: AppBar(),
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              Text("학사안내입니다.")
+            ],
+          ),
+        ),
       ),
     );
   }
