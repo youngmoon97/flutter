@@ -49,7 +49,8 @@ class ListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(border: Border.all(width: 2, color: Colors.black)),
+      decoration: BoxDecoration(
+          border: Border.all(width: 2, color: Colors.black)),
       child: Column(
         children: [
           Text("유저번호 : ${postDTOTable.userId}"),
