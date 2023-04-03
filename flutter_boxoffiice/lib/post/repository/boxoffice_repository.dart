@@ -9,7 +9,7 @@ class BoxofficeRepository{
   BoxofficeRepository._canAnyName(){
 
   }
-3
+
   static BoxofficeRepository get instance => _instance ??= BoxofficeRepository._canAnyName();
 
   Future<BoxofficeResult?> getDTOList() async{

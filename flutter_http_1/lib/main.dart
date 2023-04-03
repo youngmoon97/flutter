@@ -14,7 +14,8 @@ void main(){
       providers: [
         ChangeNotifierProvider(create: (BuildContext context)=>PostTableController()),
       ],
-    child: MyApp(),)
+    child: MyApp(),
+    )
   );
 }
 
