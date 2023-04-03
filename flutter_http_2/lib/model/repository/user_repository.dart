@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_http_2/user_dto.dart';
+import 'package:flutter_http_2/model/dto/user_dto.dart';
 import 'package:http/http.dart' as http;
 
 class UserRepository{
